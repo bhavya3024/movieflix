@@ -1484,6 +1484,11 @@ ajv@^6.12.4:
     json-schema-traverse "^0.4.1"
     uri-js "^4.2.2"
 
+alova@^2.15.0:
+  version "2.15.0"
+  resolved "https://registry.yarnpkg.com/alova/-/alova-2.15.0.tgz#ed02fa3c282d26db7616976c90be04814e57fea3"
+  integrity sha512-DXeRghekmFJxmzSZ3pDGWJVWUWLLaUX6oud1KWy3duha4zfjsbZtw5KfaQS3c157Z9o5y2Ho9iALvDuou4APMQ==
+
 ansi-regex@^5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/ansi-regex/-/ansi-regex-5.0.1.tgz#082cb2c89c9fe8659a311a53bd6a4dc5301db304"

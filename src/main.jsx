@@ -1,12 +1,15 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { FluentProvider, teamsLightTheme } from '@fluentui/react-components';
+import { createRoot } from 'react-dom/client';
+import { FluentProvider, teamsDarkTheme } from '@fluentui/react-components';
+import './main.css';
+
 
 import App from './App';
 
-ReactDOM.render(
-  <FluentProvider theme={teamsLightTheme}>
+const container = document.getElementById('root');
+const root = createRoot(container);
+root.render(
+  <FluentProvider theme={teamsDarkTheme}>
     <App />
-  </FluentProvider>,
-  document.getElementById('root'),
+  </FluentProvider>
 );
