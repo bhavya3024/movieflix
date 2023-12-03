@@ -21,16 +21,14 @@ const useStyle = makeStyles({
 export default function MovieList() {
     const style = useStyle();
     const currentSelectedYear = useSelector((state) => state.headerReducer.year);
-    console.log(currentSelectedYear);
+    const [selectedYear, setSelectedYear] = useState();
     const [page, setPage] = useState(1);
-    const [releaseDate, setReleaseDate] = useState(2012);
     const [loading, setLoading] = useState(false);
     const [movieList, setMovieList] = useState([]);
-    const [error, setError] = useState();
-    
 
+    //  const [error, setError] = useState();
 
-    const fetchMovies = async (fetchedMovieList) => {
+    const fetchMovies = async (appendData = true) => {
         if (loading) {
             return;
         }
@@ -38,17 +36,20 @@ export default function MovieList() {
         const { data } = await axios.get(API_URL, {
             params: {
                 api_key: API_KEY,
-                page,
-                primary_release_year: releaseDate,
+                page: appendData ? page : 1,
+                primary_release_year: currentSelectedYear,
             }
         });
         setLoading(() => false);
-        setMovieList(() => [...fetchedMovieList, ...data.results]);
+        setMovieList(() => appendData ? [...movieList, ...data.results] : [...data.results]);
+        setSelectedYear(currentSelectedYear);
+
     };
 
 
-    const handleScroll = () => {
-        if (loading) {
+    window.onscroll = () => {
+        if (selectedYear !== currentSelectedYear || loading) {
+            console.log('DIFFERENT YEAR!');
             return;
         }
         const windowHeight = window.innerHeight;
@@ -56,25 +57,36 @@ export default function MovieList() {
         const scrollPosition = window.scrollY;
         const isBottom = windowHeight + scrollPosition >= documentHeight;
         if (isBottom) {
+            console.log('PAGE -->>', page);
             setPage(page + 1);
         }
     };
 
+    if (selectedYear !== currentSelectedYear) {
+        window.scroll({
+            top: 0,
+        });
+    }
+
+
     useEffect(() => {
-        fetchMovies(movieList).then(() => {
-            window.addEventListener('scroll', handleScroll);
-        })
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
+        if (page !== 1) {
+            fetchMovies(true);
         }
-    }, [page, releaseDate]);
+    }, [page]);
+
+    useEffect(() => {
+        if (selectedYear !== currentSelectedYear) {
+            fetchMovies(false);
+        }
+    }, [selectedYear, currentSelectedYear]);
 
     return (<>
         {loading ? <FluentSpinner label={'LOADING...'} /> : ''}
         <div className={style.movieList}>
             {movieList?.map((result, index) => <MovieCard key={Math.random() + index} title={result.original_title} posterPath={result.poster_path} backdropPath={result.backdrop_path} />)}
         </div>
-        {error ? error.message : ''}
+        {/* //   {error ? error.message : ''} */}
     </>
     );
 }

@@ -7,7 +7,6 @@ const headerReducer = createSlice({
     },
     reducers: {
         changeYear: (state, action) => {
-            console.log(action);
             state.year = action.payload.year;
         },
     },
