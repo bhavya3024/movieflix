@@ -20,15 +20,15 @@ const useStyle = makeStyles({
 
 export default function MovieList() {
     const style = useStyle();
-    const currentSelectedYear = useSelector((state) => state.headerReducer.year);
-    const [selectedYear, setSelectedYear] = useState();
-    const [page, setPage] = useState(1);
+    const [selectedYear, setSelectedYear] = useState(2012);
     const [loading, setLoading] = useState(false);
     const [movieList, setMovieList] = useState([]);
+    const [topScroll, setTopScroll] = useState(false);
+    const [firstTimeLoading, setFirstTimeLoading] = useState(false);
 
     //  const [error, setError] = useState();
 
-    const fetchMovies = async (appendData = true) => {
+    const fetchMovies = async () => {
         if (loading) {
             return;
         }
@@ -36,50 +36,57 @@ export default function MovieList() {
         const { data } = await axios.get(API_URL, {
             params: {
                 api_key: API_KEY,
-                page: appendData ? page : 1,
-                primary_release_year: currentSelectedYear,
+                page: 1,
+                primary_release_year: selectedYear,
             }
         });
         setLoading(() => false);
-        setMovieList(() => appendData ? [...movieList, ...data.results] : [...data.results]);
-        setSelectedYear(currentSelectedYear);
-
+        let updatedMovieList;
+        if (!firstTimeLoading) {
+            updatedMovieList = topScroll ? [...data.results, ...movieList] : [...movieList, ...data.results];
+        } else {
+            updatedMovieList = [...data.results];
+        }
+        setMovieList(() => updatedMovieList);
     };
 
 
     window.onscroll = () => {
-        if (selectedYear !== currentSelectedYear || loading) {
-            console.log('DIFFERENT YEAR!');
+        if (loading) { // if movies are loading, prevent loading more movies at a time
             return;
         }
         const windowHeight = window.innerHeight;
         const documentHeight = document.documentElement.scrollHeight;
         const scrollPosition = window.scrollY;
         const isBottom = windowHeight + scrollPosition >= documentHeight;
+        const isUp = window.scrollY === 0;
         if (isBottom) {
-            console.log('PAGE -->>', page);
-            setPage(page + 1);
+            setTopScroll(false);
+            setSelectedYear(selectedYear + 1);
+        } else if (isUp) {
+            setTopScroll(true);
+            setSelectedYear(selectedYear - 1);
+            window.scrollTo({
+                top: firstTimeLoading ? 0 : 500, // Adjust the value as needed
+            });
+            setFirstTimeLoading(false);
         }
     };
+    // if (selectedYear !== currentSelectedYear) {
+    //     window.scroll({
+    //         top: 0,
+    //     });
+    // }
 
-    if (selectedYear !== currentSelectedYear) {
-        window.scroll({
-            top: 0,
-        });
-    }
 
-
+    // useEffect(() => {
+    //     if (page !== 1) {
+    //         fetchMovies(true);
+    //     }
+    // }, [page]);
     useEffect(() => {
-        if (page !== 1) {
-            fetchMovies(true);
-        }
-    }, [page]);
-
-    useEffect(() => {
-        if (selectedYear !== currentSelectedYear) {
-            fetchMovies(false);
-        }
-    }, [selectedYear, currentSelectedYear]);
+        fetchMovies(true);
+    }, [selectedYear]);
 
     return (<>
         {loading ? <FluentSpinner label={'LOADING...'} /> : ''}

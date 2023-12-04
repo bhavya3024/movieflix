@@ -63,10 +63,10 @@ export default function Header() {
     const [currentYear, setCurrentYear] = useState(2012);
     const yearDropDowns = [];
     let startingYear = 2012;
-    while (startingYear <= new Date().getFullYear()) {
-        yearDropDowns.push(startingYear);
-        startingYear++;
-    }
+    // while (startingYear <= new Date().getFullYear()) {
+    //     yearDropDowns.push(startingYear);
+    //     startingYear++;
+    // }
 
     const onYearChanged = (optionValue) => {
         setCurrentYear(optionValue);
@@ -87,9 +87,9 @@ export default function Header() {
                 <Button className={style.tabListButtons} size="large" >Drama</Button>
             </TabList>
             <label id={dropdownId}>Select year</label>
-            <Dropdown title="Select Year" className={style.dropdown} defaultValue={currentYear} id={dropdownId} onOptionSelect={(event, option) => onYearChanged(option.optionValue)} placeholder="Select Year">
+            {/* <Dropdown title="Select Year" className={style.dropdown} defaultValue={currentYear} id={dropdownId} onOptionSelect={(event, option) => onYearChanged(option.optionValue)} placeholder="Select Year">
                 {yearDropDowns.map((year, index) => <Option key={Math.random() + index} text={year}>{year}</Option>)}
-            </Dropdown>
+            </Dropdown> */}
             <label className={style.dropDownLabel} id={dropdownId} title="Select Year"></label>
         </div>
     );
