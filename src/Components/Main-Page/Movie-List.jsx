@@ -20,7 +20,10 @@ const useStyle = makeStyles({
 
 export default function MovieList() {
     const style = useStyle();
+    const currentYear = new Date().getFullYear();
     const [selectedYear, setSelectedYear] = useState(2012);
+    const [minYear, setMinYear] = useState(selectedYear);
+    const [maxYear, setMaxYear] = useState(selectedYear);
     const [loading, setLoading] = useState(false);
     const [movieList, setMovieList] = useState([]);
     const [topScroll, setTopScroll] = useState(false);
@@ -62,28 +65,26 @@ export default function MovieList() {
         const isUp = window.scrollY === 0;
         if (isBottom) {
             setTopScroll(false);
-            setSelectedYear(selectedYear + 1);
+            if (selectedYear + 1 > maxYear) {
+                setMaxYear(selectedYear + 1);
+                setSelectedYear(selectedYear + 1);
+            } else {
+                setSelectedYear(maxYear + 1);
+            }
         } else if (isUp) {
             setTopScroll(true);
-            setSelectedYear(selectedYear - 1);
+            if (selectedYear - 1 < minYear) {
+                setMinYear(selectedYear - 1);
+                setSelectedYear(selectedYear - 1);
+            } else {
+                setSelectedYear(minYear - 1);
+            }
             window.scrollTo({
                 top: firstTimeLoading ? 0 : 500, // Adjust the value as needed
             });
             setFirstTimeLoading(false);
         }
     };
-    // if (selectedYear !== currentSelectedYear) {
-    //     window.scroll({
-    //         top: 0,
-    //     });
-    // }
-
-
-    // useEffect(() => {
-    //     if (page !== 1) {
-    //         fetchMovies(true);
-    //     }
-    // }, [page]);
     useEffect(() => {
         fetchMovies(true);
     }, [selectedYear]);
