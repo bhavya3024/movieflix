@@ -6,7 +6,8 @@ import { API_KEY, API_URL } from '../../constants';
 import MovieCard from "./Movie-Card";
 import axios from "axios";
 import FluentSpinner from "../Spinner";
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
+
 
 const useStyle = makeStyles({
     movieList: {
@@ -20,7 +21,6 @@ const useStyle = makeStyles({
 
 export default function MovieList() {
     const style = useStyle();
-    const currentYear = new Date().getFullYear();
     const [selectedYear, setSelectedYear] = useState(2012);
     const [minYear, setMinYear] = useState(selectedYear);
     const [maxYear, setMaxYear] = useState(selectedYear);
@@ -28,15 +28,16 @@ export default function MovieList() {
     const [movieList, setMovieList] = useState([]);
     const [topScroll, setTopScroll] = useState(false);
     const [firstTimeLoading, setFirstTimeLoading] = useState(false);
-
-    //  const [error, setError] = useState();
+    const genres = useSelector((state) => state.headerReducer.genres);
+    const [prevGenre, setPrevGenre] = useState(genres);
 
     const fetchMovies = async () => {
         if (loading) {
             return;
         }
         setLoading(() => true);
-        const { data } = await axios.get(API_URL, {
+        const encodedArray = genres.join('%7C')
+        const { data } = await axios.get(`${API_URL}?with_genres=${encodedArray}`, {
             params: {
                 api_key: API_KEY,
                 page: 1,
@@ -51,6 +52,7 @@ export default function MovieList() {
             updatedMovieList = [...data.results];
         }
         setMovieList(() => updatedMovieList);
+        setPrevGenre(() => [...genres]);
     };
 
 
@@ -71,6 +73,9 @@ export default function MovieList() {
             } else {
                 setSelectedYear(maxYear + 1);
             }
+            window.scrollTo({
+                top: firstTimeLoading ? 0 : documentHeight - 500, // Adjust the value as needed
+            });
         } else if (isUp) {
             setTopScroll(true);
             if (selectedYear - 1 < minYear) {
@@ -85,9 +90,13 @@ export default function MovieList() {
             setFirstTimeLoading(false);
         }
     };
+ 
     useEffect(() => {
-        fetchMovies(true);
-    }, [selectedYear]);
+        if (JSON.stringify(prevGenre) !== JSON.stringify(genres)) {
+            setFirstTimeLoading(true);
+        }
+        fetchMovies();
+    }, [selectedYear, genres]);
 
     return (<>
         {loading ? <FluentSpinner label={'LOADING...'} /> : ''}

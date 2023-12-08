@@ -3,15 +3,15 @@ import { createSlice } from '@reduxjs/toolkit';
 const headerReducer = createSlice({
     name: 'header',
     initialState: {
-        year: 2012,
+        genres: [],
     },
     reducers: {
-        changeYear: (state, action) => {
-            state.year = action.payload.year;
+        changeGenre: (state, action) => {
+            state.genres = action.payload.genres;
         },
     },
 })
 
-export const { changeYear } = headerReducer.actions;
+export const { changeGenre } = headerReducer.actions;
 
 export default headerReducer.reducer;

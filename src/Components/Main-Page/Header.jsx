@@ -1,16 +1,14 @@
 import {
     makeStyles,
-    Button,
-    TabList,
     Dropdown,
     Option,
     useId,
-    Label,
 } from "@fluentui/react-components";
-import { useState } from 'react';
- 
-import { useDispatch } from 'react-redux';
-import { changeYear } from './Header-Reducer';
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux'
+import axios from "axios";
+import { changeGenre } from './Header-Reducer';
+import { API_KEY, API_URL, GENRE_URL } from "../../constants";
 
 
 const useStyle = makeStyles({
@@ -48,48 +46,50 @@ const useStyle = makeStyles({
         }
     },
     dropdown: {
-        height: '40px',
+        maxHeight: '40px',
         marginLeft: '30px',
-    },
-    dropDownLabel: {
-        color: '#ffffff',
+        maxWidth: '300px',
+        minWidth: '300px',
+        overflowX: 'hidden',
+        overflowY: 'hidden',
+        textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap' 
     },
 });
 
 export default function Header() {
     const style = useStyle();
     const dispatch = useDispatch();
-    const dropdownId = useId("dropdown");
-    const [currentYear, setCurrentYear] = useState(2012);
-    const yearDropDowns = [];
-    let startingYear = 2012;
-    // while (startingYear <= new Date().getFullYear()) {
-    //     yearDropDowns.push(startingYear);
-    //     startingYear++;
-    // }
+    const [genres, setGenres] = useState([]); 
+    const dropdownId = useId('dropdown');
 
-    const onYearChanged = (optionValue) => {
-        setCurrentYear(optionValue);
-        dispatch(changeYear({
-            year: optionValue
-        }))
+    const fetchQualities = async () => {
+        const { data } = await axios.get(GENRE_URL, {
+            params: {
+                api_key: API_KEY,
+            }
+        });
+        setGenres(() => [...data.genres]);
     }
 
+    useEffect(() => {
+        fetchQualities();
+    }, []);
+
+
+    const onGenreSelected = (values) => {
+        dispatch(changeGenre({
+           genres: values
+        }));
+    };
 
     return (
         <div className={style.headerMain}>
             <img src="src/assets/fancode-fc.png" className={style.movieLogo} />
-            <TabList className={style.tabList}>
-                <Button className={style.tabListButtons} size="large" >All</Button>
-                <Button className={style.tabListButtons} size="large" >Action</Button>
-                <Button className={style.tabListButtons} size="large" >Comedy</Button>
-                <Button className={style.tabListButtons} size="large" >Horror</Button>
-                <Button className={style.tabListButtons} size="large" >Drama</Button>
-            </TabList>
-            <label id={dropdownId}>Select year</label>
-            {/* <Dropdown title="Select Year" className={style.dropdown} defaultValue={currentYear} id={dropdownId} onOptionSelect={(event, option) => onYearChanged(option.optionValue)} placeholder="Select Year">
-                {yearDropDowns.map((year, index) => <Option key={Math.random() + index} text={year}>{year}</Option>)}
-            </Dropdown> */}
+            <label id={dropdownId}>Select Genre</label>
+            <Dropdown title="Select Year" multiselect={true}  className={style.dropdown} expandIcon={false} defaultValue={genres[0]?.id}  id={dropdownId} onOptionSelect={(event, option) => onGenreSelected(option.selectedOptions)} placeholder="Select Genre">
+                {genres.map((genre, index) => <Option key={Math.random() + index}  value={genre.id} text={genre.name}>{genre.name}</Option>)}
+            </Dropdown>
             <label className={style.dropDownLabel} id={dropdownId} title="Select Year"></label>
         </div>
     );
