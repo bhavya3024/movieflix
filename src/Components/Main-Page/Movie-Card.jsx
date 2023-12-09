@@ -1,62 +1,72 @@
-
-
 import * as React from "react";
-import {
-    makeStyles,
-    Body1,
-    Caption1,
-    Button,
-    shorthands,
-} from "@fluentui/react-components";
-import { ArrowReplyRegular, ShareRegular } from "@fluentui/react-icons";
-import {
-    Card,
-    CardFooter,
-    CardHeader,
-    CardPreview,
-} from "@fluentui/react-components";
+import { makeStyles, shorthands } from "@fluentui/react-components";
+import { Card, CardPreview } from "@fluentui/react-components";
 import { IMAGE_W_500_URL } from "../../constants";
 
 const resolveAsset = (asset) => `${IMAGE_W_500_URL}/${asset}`;
+
 const useStyles = makeStyles({
-    card: {
-        ...shorthands.margin("auto"),
-        marginTop: '10px',
-        minWidth: '100%',
-        height: '500px',
-    },
-    posterPathImage: {
-        maxWidth: '300px',
-        maxHeight: '500px',
-    }
+  card: {
+    ...shorthands.margin("auto"),
+    marginTop: '10px',
+    marginRight: '5px',
+    height: 'fit-content',
+    position: 'relative',
+    border: 'none',
+  },
+  cardPreview: {
+    position: 'relative',
+    width: '100%',
+    minHeight: '300px',
+  },
+  posterPathImage: {
+    width: '100%',
+    height: '100%',
+    opacity: '0.5',
+    // minWidth: '405px',
+    // minHeight: '608px',
+    // '@media screen and (max-width: 600px)': {
+    //     minWidth: '250px',
+    //     maxWidth: '250px',
+    // }
+  },
+  textContainer: {
+    position: 'absolute',
+    bottom: '0',
+    left: '0',
+    width: '100%',
+    padding: '10px',
+    height: 'fit-content',
+    boxSizing: 'border-box',
+    color: 'white',
+    textAlign: 'left',
+  },
+  title: {
+    fontSize: '1.5rem',
+    margin: 0,
+    maxWidth: 'fit-content',
+  },
 });
 
+export default function MovieCard(movie) {
+  const styles = useStyles();
 
-export default function MovieCard({
-    title,
-    posterPath,
-    backdropPath
-}) {
-    const styles=  useStyles();
-    return (
-        <Card className={styles.card}>
-            <CardHeader
-                image={
-                    <img
-                        src={resolveAsset(posterPath)}
-                        alt={title}
-                        className={styles.posterPathImage}
-                    />
-                }
-            />
-            <CardPreview>
-                <b>{title}</b>
-            </CardPreview>
-
-            <CardFooter>
-                {/* <Button icon={<ArrowReplyRegular fontSize={16} />}>Reply</Button>
-                <Button icon={<ShareRegular fontSize={16} />}>Share</Button> */}
-            </CardFooter>
-        </Card>
-    );
+  return (
+    <Card className={styles.card}>
+      <CardPreview className={styles.cardPreview}>
+        <img
+          src={resolveAsset(movie.poster_path)}
+          alt={movie.title}
+          className={styles.posterPathImage}
+        />
+        <div className={styles.textContainer}>
+          <h3 className={styles.title}>{movie.title}</h3>
+          <p>
+            {movie.genre_ids.map(genreId => localStorage.getItem(`genre_${genreId}`)).join(',')}
+          </p>
+          <p>{movie.overview}</p>
+        </div>
+      </CardPreview>
+    </Card>
+  );
 }

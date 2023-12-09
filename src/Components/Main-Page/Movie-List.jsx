@@ -12,11 +12,18 @@ import { useSelector } from "react-redux";
 const useStyle = makeStyles({
     movieList: {
         display: 'grid',
-        gridTemplateColumns: 'repeat(4, 1fr)',
+        gridTemplateColumns: 'repeat(3, 1fr)',
+        flexWrap: 'wrap',
         marginLeft: '80px',
         marginRight: '80px',
         marginTop: '10px',
-    }
+        '@media screen and (max-width: 600px)': {
+            gridTemplateColumns: 'repeat(1, 1fr)',
+        },
+        '@media screen and (max-width: 1500px) and (min-width: 600px)': {
+            gridTemplateColumns: 'repeat(2, 1fr)',
+        },
+    },
 });
 
 export default function MovieList() {
@@ -42,6 +49,7 @@ export default function MovieList() {
                 api_key: API_KEY,
                 page: 1,
                 primary_release_year: selectedYear,
+                sort_by: 'popularity.desc',
             }
         });
         setLoading(() => false);
@@ -67,7 +75,7 @@ export default function MovieList() {
         const isUp = window.scrollY === 0;
         if (isBottom) {
             setTopScroll(false);
-            if (selectedYear + 1 > maxYear) {
+            if (selectedYear + 1 > maxYear && selectedYear + 1 <= new Date().getFullYear()) {
                 setMaxYear(selectedYear + 1);
                 setSelectedYear(selectedYear + 1);
             } else {
@@ -101,7 +109,12 @@ export default function MovieList() {
     return (<>
         {loading ? <FluentSpinner label={'LOADING...'} /> : ''}
         <div className={style.movieList}>
-            {movieList?.map((result, index) => <MovieCard key={Math.random() + index} title={result.original_title} posterPath={result.poster_path} backdropPath={result.backdrop_path} />)}
+            {movieList?.map((movie, index) => <MovieCard key={Math.random() + index} 
+            {...movie}
+            // title={result.original_title} 
+            // posterPath={result.poster_path} 
+            // backdropPath={result.backdrop_path}
+            />)}
         </div>
         {/* //   {error ? error.message : ''} */}
     </>

@@ -20,7 +20,10 @@ const useStyle = makeStyles({
         width: '100%',
         paddingTop: '10px',
         top: 0,
-        alignItems: 'center'
+        alignItems: 'center',
+        '@media screen and (max-width: 600px)': {
+           flexDirection: 'column',
+        }
     },
     movieLogo: {
         minHeight: '100px',
@@ -63,6 +66,12 @@ export default function Header() {
     const [genres, setGenres] = useState([]); 
     const dropdownId = useId('dropdown');
 
+    const storeGenreInLocalStorage = (genres) => {
+        genres.forEach(genre => {
+            localStorage.setItem(`genre_${genre.id}`, genre.name);
+        });
+    };
+
     const fetchQualities = async () => {
         const { data } = await axios.get(GENRE_URL, {
             params: {
@@ -70,6 +79,7 @@ export default function Header() {
             }
         });
         setGenres(() => [...data.genres]);
+        storeGenreInLocalStorage(data.genres);
     }
 
     useEffect(() => {
