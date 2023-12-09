@@ -13,11 +13,13 @@ const useStyles = makeStyles({
     height: 'fit-content',
     position: 'relative',
     border: 'none',
+    padding: '10px',
   },
   cardPreview: {
     position: 'relative',
     width: '100%',
     minHeight: '300px',
+    padding: '10px',
   },
   posterPathImage: {
     width: '100%',
@@ -26,10 +28,9 @@ const useStyles = makeStyles({
   },
   textContainer: {
     position: 'absolute',
-    bottom: '0',
-    left: '0',
-    width: '100%',
-    padding: '10px',
+    top: '10px',
+    left: '10px',
+    width: '70%',
     height: 'fit-content',
     boxSizing: 'border-box',
     color: 'white',

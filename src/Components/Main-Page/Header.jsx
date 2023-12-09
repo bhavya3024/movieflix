@@ -9,6 +9,7 @@ import { useDispatch } from 'react-redux'
 import axios from "axios";
 import { changeGenre } from './Header-Reducer';
 import { API_KEY, GENRE_URL } from "../../constants";
+import Logo from '../../../src/assets/fancode-fc.png';
 
 
 const useStyle = makeStyles({
@@ -99,7 +100,7 @@ export default function Header() {
 
     return (
         <div className={style.headerMain}>
-            <img src="src/assets/fancode-fc.png" className={style.movieLogo} />
+            <img src={Logo} className={style.movieLogo} />
             <label id={dropdownId}>Select Genre</label>
             <Dropdown title="Select Year" multiselect={true}  className={style.dropdown} expandIcon={false} defaultValue={genres[0]?.id}  id={dropdownId} onOptionSelect={(event, option) => onGenreSelected(option.selectedOptions)} placeholder="Select Genre">
                 {genres.map((genre, index) => <Option key={Math.random() + index}  value={genre.id} text={genre.name}>{genre.name}</Option>)}
