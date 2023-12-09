@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux'
 import axios from "axios";
 import { changeGenre } from './Header-Reducer';
-import { API_KEY, API_URL, GENRE_URL } from "../../constants";
+import { API_KEY, GENRE_URL } from "../../constants";
 
 
 const useStyle = makeStyles({
@@ -56,7 +56,11 @@ const useStyle = makeStyles({
         overflowX: 'hidden',
         overflowY: 'hidden',
         textOverflow: 'ellipsis',
-        whiteSpace: 'nowrap' 
+        whiteSpace: 'nowrap',
+        '@media screen and (max-width: 600px)': {
+            flexDirection: 'column',
+            marginBottom: '10px'
+        },
     },
 });
 

@@ -111,12 +111,8 @@ export default function MovieList() {
         <div className={style.movieList}>
             {movieList?.map((movie, index) => <MovieCard key={Math.random() + index} 
             {...movie}
-            // title={result.original_title} 
-            // posterPath={result.poster_path} 
-            // backdropPath={result.backdrop_path}
             />)}
         </div>
-        {/* //   {error ? error.message : ''} */}
     </>
     );
 }

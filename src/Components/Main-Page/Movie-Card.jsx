@@ -23,12 +23,6 @@ const useStyles = makeStyles({
     width: '100%',
     height: '100%',
     opacity: '0.5',
-    // minWidth: '405px',
-    // minHeight: '608px',
-    // '@media screen and (max-width: 600px)': {
-    //     minWidth: '250px',
-    //     maxWidth: '250px',
-    // }
   },
   textContainer: {
     position: 'absolute',
