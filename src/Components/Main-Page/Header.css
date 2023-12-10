@@ -30,6 +30,7 @@
     color: lightgray;
     margin-right: 5px;
     border-radius: 5px;
+    margin-bottom: 5px;
 }
 
 .genre-button-active {
@@ -38,6 +39,7 @@
     color: lightgray;
     margin-right: 5px;
     background-color: darkred;
+    margin-bottom: 5px;
 }
 
 
@@ -46,9 +48,6 @@
         grid-template-columns: repeat(3, 1fr);
     }
 
-    .genre-button {
-        margin-bottom: 5px;
-    }
 
     .header {
         flex-direction: column;
@@ -59,10 +58,6 @@
 @media screen and (max-width: 500px) {
     .genre-buttons {
         grid-template-columns: repeat(2, 1fr);
-        margin-bottom: 5px;
-    }
-
-    .genre-button {
         margin-bottom: 5px;
     }
 }
