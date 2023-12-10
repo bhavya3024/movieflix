@@ -1,0 +1,73 @@
+.header {
+    display: flex;
+    position: fixed;
+    z-index: 1000;
+    background-color: #000000;
+    width: 100%;
+    padding-top: 10px;
+    top: 0;
+    align-items: center;
+}
+
+.movie-logo {
+    min-height: 100px;
+    min-width: 100px;
+}
+
+.genre-buttons {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    margin-bottom: 5px;
+}
+
+
+.genre-button {
+    background-color: #292929;
+    font-size: 20px;
+    border: 1px solid lightgray;
+    color: lightgray;
+    margin-right: 5px;
+    border-radius: 5px;
+}
+
+.genre-button-active {
+    font-size: 20px;
+    border: 1px solid lightgray;
+    color: lightgray;
+    margin-right: 5px;
+    background-color: darkred;
+}
+
+
+@media screen and (max-width: 1000px) {
+    .genre-buttons {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .genre-button {
+        margin-bottom: 5px;
+    }
+
+    .header {
+        flex-direction: column;
+    }
+}
+
+
+@media screen and (max-width: 500px) {
+    .genre-buttons {
+        grid-template-columns: repeat(2, 1fr);
+        margin-bottom: 5px;
+    }
+
+    .genre-button {
+        margin-bottom: 5px;
+    }
+}
+
+.reset-button {
+    font-size: 30px;
+    background-color: lightgray;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}

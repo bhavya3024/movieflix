@@ -1,36 +1,12 @@
 import { useState, useEffect } from "react";
-import {
-    makeStyles,
-} from "@fluentui/react-components";
 import { API_KEY, API_URL } from '../../constants';
 import MovieCard from "./Movie-Card";
 import axios from "axios";
-import FluentSpinner from "../Spinner";
 import { useSelector } from "react-redux";
-
-
-const useStyle = makeStyles({
-    movieList: {
-        display: 'grid',
-        gridTemplateColumns: 'repeat(3, 1fr)',
-        flexWrap: 'wrap',
-        marginLeft: 'auto',
-        marginRight: 'auto',
-        marginTop: '10px',
-        position: 'absolute',
-        top: '150px',
-        width: '100%',
-        '@media screen and (max-width: 1000px)': {
-            gridTemplateColumns: 'repeat(1, 1fr)',
-        },
-        '@media screen and (max-width: 1500px) and (min-width: 1000px)': {
-            gridTemplateColumns: 'repeat(2, 1fr)',
-        },
-    },
-});
+import LoaderScreen from "../LoaderScreen";
+import './Movie-List.css'
 
 export default function MovieList() {
-    const style = useStyle();
     const [selectedYear, setSelectedYear] = useState(2012);
     const [minYear, setMinYear] = useState(selectedYear);
     const [maxYear, setMaxYear] = useState(selectedYear);
@@ -46,13 +22,14 @@ export default function MovieList() {
             return;
         }
         setLoading(() => true);
-        const encodedArray = genres.join('%7C')
+        const encodedArray = genres.join('%7C');
         const { data } = await axios.get(`${API_URL}?with_genres=${encodedArray}`, {
             params: {
                 api_key: API_KEY,
                 page: 1,
                 primary_release_year: selectedYear,
                 sort_by: 'popularity.desc',
+                'vote_count.gte': 100
             }
         });
         setLoading(() => false);
@@ -111,8 +88,8 @@ export default function MovieList() {
     }, [selectedYear, genres]);
 
     return (<>
-        {loading ? <FluentSpinner label={'LOADING...'} /> : ''}
-        <div className={style.movieList}>
+        {loading ? <LoaderScreen /> : ''}
+        <div className='movie-list'>
             {movieList?.map((movie, index) => <MovieCard key={Math.random() + index} 
             {...movie}
             />)}

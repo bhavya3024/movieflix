@@ -1,0 +1,26 @@
+.movie-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    flex-wrap: wrap;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    position: absolute;
+    top: 150px;
+    width: 100%;
+}
+
+@media screen and (max-width: 1000px) {
+   .movie-list {
+    grid-template-columns: repeat(1, 1fr);
+    top: 500px;
+   }
+}
+
+
+@media screen and (max-width: 1500px) and (min-width: 1000px) {
+   .movie-list {
+    grid-template-columns: repeat(2, 1fr);
+    top: 200px;
+   }
+}
