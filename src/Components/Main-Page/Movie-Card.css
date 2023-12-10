@@ -8,10 +8,10 @@
 
 .card-image {
     display: block;
-    width: 100%;
+    width: 95%;
     height: auto;
     margin-left: auto;
-    margin-right: 10px;
+    margin-right: auto;
     opacity: 0.5;
 }
 
@@ -24,9 +24,6 @@
 }
 
 @media screen and (max-width: 500px) {
-    .card-description {
-        left: 25%;
-    }
     .card-image {
         margin-left: 10px;
         margin-right: 10px;
