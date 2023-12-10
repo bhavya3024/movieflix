@@ -12,9 +12,10 @@ export default function MovieCard(movie) {
   return (
     <div className="custom-card">
       <img src={resolveAsset(movie.poster_path)} alt="Card" className="card-image" onLoad={() => handleImageLoading()}>
-
         </img>
-      {loading ? <div>Loading ...</div> :
+      {loading ? <div style={{
+        textAlign: 'center'
+      }}>LOADING......</div> :
         <div className="card-description">
           <h1>{movie.title}</h1>
           <h4>Release year: {new Date(movie.release_date).getFullYear()}</h4>
