@@ -17,10 +17,10 @@ const useStyle = makeStyles({
         marginLeft: '80px',
         marginRight: '80px',
         marginTop: '10px',
-        '@media screen and (max-width: 600px)': {
+        '@media screen and (max-width: 1000px)': {
             gridTemplateColumns: 'repeat(1, 1fr)',
         },
-        '@media screen and (max-width: 1500px) and (min-width: 600px)': {
+        '@media screen and (max-width: 1500px) and (min-width: 1000px)': {
             gridTemplateColumns: 'repeat(2, 1fr)',
         },
     },
@@ -73,9 +73,9 @@ export default function MovieList() {
         const scrollPosition = window.scrollY;
         const isBottom = windowHeight + scrollPosition >= documentHeight;
         const isUp = window.scrollY === 0;
-        if (isBottom) {
+        if (isBottom && selectedYear < new Date().getFullYear()) {
             setTopScroll(false);
-            if (selectedYear + 1 > maxYear && selectedYear + 1 <= new Date().getFullYear()) {
+            if (selectedYear + 1 > maxYear) {
                 setMaxYear(selectedYear + 1);
                 setSelectedYear(selectedYear + 1);
             } else {

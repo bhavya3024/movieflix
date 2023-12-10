@@ -22,7 +22,7 @@ const useStyle = makeStyles({
         paddingTop: '10px',
         top: 0,
         alignItems: 'center',
-        '@media screen and (max-width: 600px)': {
+        '@media screen and (max-width: 1000px)': {
            flexDirection: 'column',
         }
     },
@@ -58,7 +58,7 @@ const useStyle = makeStyles({
         overflowY: 'hidden',
         textOverflow: 'ellipsis',
         whiteSpace: 'nowrap',
-        '@media screen and (max-width: 600px)': {
+        '@media screen and (max-width: 1000px)': {
             flexDirection: 'column',
             marginBottom: '10px'
         },
