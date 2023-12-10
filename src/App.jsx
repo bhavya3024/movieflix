@@ -6,5 +6,5 @@ import MovieList from './Components/Main-Page/Movie-List';
 
 export default () => <div className="main">
   <Header />
-  <MovieList />
+  <MovieList/>
 </div>;

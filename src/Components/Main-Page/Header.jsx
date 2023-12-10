@@ -1,8 +1,3 @@
-import {
-    makeStyles,
-    useId,
-    Checkbox,
-} from "@fluentui/react-components";
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux'
@@ -21,7 +16,6 @@ export default function Header() {
     const storeGenreInLocalStorage = (genres) => {
         genres.forEach(genre => {
             localStorage.setItem(`genre_${genre.id}`, genre.name);
-            genreSelection.set(genre.id, false);
         });
     };
 
