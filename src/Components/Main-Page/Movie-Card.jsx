@@ -11,13 +11,14 @@ const useStyles = makeStyles({
     marginTop: '10px',
     height: 'fit-content',
     position: 'relative',
-    padding: '0px!important',
+    paddingRight: '0px!important',
+    '--fui-Card--size': '0px!important',
   },
   cardPreview: {
     width: '100%',
     marginLeft: 'auto',
     marginRight: 'auto',
-    padding: '0px!important',
+    paddingRight: '0px!important',
   },
   posterPathImage: {
     width: '100%',
