@@ -9,16 +9,14 @@ const useStyles = makeStyles({
   card: {
     ...shorthands.margin("auto"),
     marginTop: '10px',
-    marginRight: '5px',
     height: 'fit-content',
     position: 'relative',
-    padding: '10px',
   },
   cardPreview: {
     position: 'relative',
     width: '100%',
-    padding: '10px',
-
+    marginLeft: 'auto',
+    marginRight: 'auto'
   },
   posterPathImage: {
     width: '100%',

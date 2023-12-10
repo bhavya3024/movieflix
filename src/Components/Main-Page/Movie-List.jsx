@@ -14,9 +14,12 @@ const useStyle = makeStyles({
         display: 'grid',
         gridTemplateColumns: 'repeat(3, 1fr)',
         flexWrap: 'wrap',
-        marginLeft: '80px',
-        marginRight: '80px',
+        marginLeft: 'auto',
+        marginRight: 'auto',
         marginTop: '10px',
+        position: 'absolute',
+        top: '150px',
+        width: '100%',
         '@media screen and (max-width: 1000px)': {
             gridTemplateColumns: 'repeat(1, 1fr)',
         },
@@ -84,6 +87,7 @@ export default function MovieList() {
             window.scrollTo({
                 top: firstTimeLoading ? 0 : documentHeight - 500, // Adjust the value as needed
             });
+            setFirstTimeLoading(false);
         } else if (isUp) {
             setTopScroll(true);
             if (selectedYear - 1 < minYear) {
