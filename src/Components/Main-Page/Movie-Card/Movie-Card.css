@@ -18,7 +18,7 @@
 .card-description {
     position: absolute;
     top: 10px;
-    left: 15%;
+    left: 5%;
     width: fit-content;
     max-width: 400px;
 }
@@ -27,8 +27,5 @@
     .card-image {
         margin-left: 10px;
         margin-right: 10px;
-    }
-    .card-description {
-        left: 5%;
     }
 }
