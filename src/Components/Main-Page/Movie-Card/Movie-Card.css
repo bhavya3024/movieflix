@@ -28,4 +28,7 @@
         margin-left: 10px;
         margin-right: 10px;
     }
+    .card-description {
+        left: 5%;
+    }
 }
