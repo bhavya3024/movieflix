@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState } from "react";
-import { IMAGE_W_500_URL } from "../../constants";
+import { IMAGE_W_500_URL } from "../../../constants";
 import './Movie-Card.css';
 
 

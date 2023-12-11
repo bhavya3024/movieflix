@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { useState, useEffect } from "react";
-import { API_KEY, API_URL } from '../../constants';
-import MovieCard from "./Movie-Card";
+import { API_KEY, API_URL } from '../../../constants';
+import MovieCard from "../Movie-Card/Movie-Card";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import LoaderScreen from "../LoaderScreen";
+import LoaderScreen from "../../LoaderScreen/LoaderScreen";
 import './Movie-List.css'
 
 export default function MovieList() {

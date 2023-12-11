@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux'
 import axios from "axios";
 import { changeGenre } from './Header-Reducer';
-import { API_KEY, GENRE_URL } from "../../constants";
-import Logo from '../../../src/assets/fancode-fc.svg';
+import { API_KEY, GENRE_URL } from "../../../constants";
+import Logo from '../../../../src/assets/fancode-fc.svg';
 import './Header.css';
 
 
