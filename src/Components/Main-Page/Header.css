@@ -57,8 +57,18 @@
 
 @media screen and (max-width: 500px) {
     .genre-buttons {
-        grid-template-columns: repeat(2, 1fr);
         margin-bottom: 5px;
+        grid-template-columns: repeat(4, 1fr);
+    }
+    .genre-button, .genre-button-active {
+        font-size: 15px;
+    }
+    .reset-button {
+        font-size: 15px;
+    }
+    .movie-logo {
+        min-width: 50px;
+        min-height: 50px;
     }
 }
 
